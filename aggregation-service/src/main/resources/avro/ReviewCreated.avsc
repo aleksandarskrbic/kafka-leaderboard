@@ -1,0 +1,22 @@
+{
+  "namespace": "avro.events",
+  "type": "record",
+  "name": "ReviewCreated",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "reviewer",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "pullRequestNumber",
+      "type": "long"
+    }
+  ]
+}

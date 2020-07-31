@@ -1,0 +1,72 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.commercehub.gradle.plugin.avro' version '0.9.1' apply false
+    id 'com.github.imflog.kafka-schema-registry-gradle-plugin' version '0.7.0' apply false
+}
+
+subprojects { subproject ->
+
+    apply plugin: 'java'
+    apply plugin: 'com.commercehub.gradle.plugin.avro'
+    apply plugin: 'com.github.imflog.kafka-schema-registry-gradle-plugin'
+
+    configurations.all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback'
+        exclude module: 'log4j-to-slf4j'
+    }
+
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    version = '0.1.0'
+    sourceCompatibility = '1.11'
+    targetCompatibility = '1.11'
+
+    ext {
+        relativeAvroSchemasDownloadLocation = "${subproject.name}/src/main/resources/avro"
+        avroSchemasDownloadDir = subproject.file("src/main/resources/avro")
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'http://packages.confluent.io/maven/'
+        }
+        mavenLocal()
+    }
+
+    schemaRegistry {
+        url = System.getenv('SCHEMA_REGISTRY_URL') ?: schemaRegistryUrl
+    }
+
+    avro {
+        fieldVisibility = 'PRIVATE'
+    }
+
+    task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
+        group = "Source Generation"
+        description = "Generates Java classes from avro schema files to temp directory."
+        source('src/main/resources/avro')
+        outputDir = file('generated/avro')
+    }
+
+    task removeGeneratedAvro(type: Delete) {
+        group = "Source Generation"
+        description = "Removes temp dir used for code generation."
+        delete 'generated/avro'
+        delete 'generated'
+    }
+
+    task copyGeneratedAvro(type: Copy, dependsOn: 'generateAvro') {
+        group = "Source Generation"
+        description = "Copies generated Java classes from temp dir src/main/java."
+        from 'generated/avro'
+        into 'src/main/java'
+        finalizedBy removeGeneratedAvro
+    }
+
+    compileJava.dependsOn copyGeneratedAvro
+}

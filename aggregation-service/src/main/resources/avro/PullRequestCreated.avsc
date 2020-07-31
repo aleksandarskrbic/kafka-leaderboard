@@ -1,0 +1,52 @@
+{
+  "namespace": "avro.events",
+  "type": "record",
+  "name": "PullRequestCreated",
+  "fields": [
+    {
+      "name": "number",
+      "type": "long"
+    },
+    {
+      "name": "merged",
+      "type": "boolean"
+    },
+    {
+      "name": "title",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "user",
+      "type": {
+        "type": "record",
+        "name": "User",
+        "fields": [
+          {
+            "name": "username",
+            "type": {
+              "type": "string",
+              "avro.java.string": "String"
+            }
+          },
+          {
+            "name": "url",
+            "type": {
+              "type": "string",
+              "avro.java.string": "String"
+            }
+          },
+          {
+            "name": "avatarUrl",
+            "type": {
+              "type": "string",
+              "avro.java.string": "String"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

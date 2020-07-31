@@ -1,0 +1,38 @@
+kafka:
+  consumers:
+    comment:
+      pollTimeout: 20
+      topic: ingestion.comment
+      properties:
+        bootstrap.servers: localhost:9092
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
+        reconnect.backoff.ms: 50
+        max.poll.records: 5000
+        auto.offset.reset: earliest
+        enable.auto.commit: false
+        group.id: comment-consumer
+    pull-request:
+      pollTimeout: 20
+      topic: ingestion.pull-request
+      properties:
+        bootstrap.servers: localhost:9092
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
+        reconnect.backoff.ms: 50
+        max.poll.records: 5000
+        auto.offset.reset: earliest
+        enable.auto.commit: false
+        group.id: pr-consumer
+    review:
+      pollTimeout: 20
+      topic: ingestion.review
+      properties:
+        bootstrap.servers: localhost:9092
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
+        reconnect.backoff.ms: 50
+        max.poll.records: 5000
+        auto.offset.reset: earliest
+        enable.auto.commit: false
+        group.id: review-consumer

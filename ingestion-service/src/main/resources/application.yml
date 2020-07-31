@@ -1,0 +1,23 @@
+kafka:
+  producers:
+    comment:
+      properties:
+        bootstrap.servers: localhost:9092
+        schema.registry.url: http://localhost:8081
+    pull-request:
+      properties:
+        bootstrap.servers: localhost:9092
+        schema.registry.url: http://localhost:8081
+    review:
+      properties:
+        bootstrap.servers: localhost:9092
+        schema.registry.url: http://localhost:8081
+  channels:
+    commentChannel: ingestion.comment
+    pullRequestChannel: ingestion.pull-request
+    reviewChannel: ingestion.review
+
+http:
+  client:
+    username:
+    password:

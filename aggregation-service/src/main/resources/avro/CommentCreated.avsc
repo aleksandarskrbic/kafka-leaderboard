@@ -1,0 +1,18 @@
+{
+  "namespace": "avro.events",
+  "type": "record",
+  "name": "CommentCreated",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "user",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    }
+  ]
+}

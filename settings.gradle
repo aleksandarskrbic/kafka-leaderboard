@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            url 'http://packages.confluent.io/maven/'
+        }
+    }
+}
+rootProject.name = 'kafka-leaderboard'
+
+include 'kafka-commons'
+include 'ingestion-service'
+include 'aggregation-service'
