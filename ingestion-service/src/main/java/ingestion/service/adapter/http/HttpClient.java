@@ -6,8 +6,6 @@ import com.mashape.unirest.http.Unirest;
 import org.springframework.stereotype.Component;
 import io.vavr.control.Try;
 
-import static io.vavr.API.Try;
-
 @Component
 public class HttpClient {
 
@@ -21,9 +19,9 @@ public class HttpClient {
 
     public Try<HttpResponse<JsonNode>> get(final String url) {
         if (username != null && password != null) {
-            return Try(() -> Unirest.get(url).basicAuth(username, password).asJson());
+            return Try.of(() -> Unirest.get(url).basicAuth(username, password).asJson());
         }
 
-        return Try(() -> Unirest.get(url).asJson());
+        return Try.of(() -> Unirest.get(url).asJson());
     }
 }

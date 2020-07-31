@@ -21,7 +21,7 @@ public class ReviewPipeline implements Processor<ReviewCreated> {
 
     @Override
     public void process() {
-        source.emit().forEach(review -> {
+        source.emit().forEach(review ->
             aggregateRepository.findByUsername(review.getReviewer())
                 .map(aggregate -> {
                     final Aggregate newAggregate = aggregate.update(10L);
@@ -35,7 +35,7 @@ public class ReviewPipeline implements Processor<ReviewCreated> {
                         10L
                     );
                     return Option.of(aggregateRepository.update(aggregate));
-                });
-        });
+                })
+        );
     }
 }

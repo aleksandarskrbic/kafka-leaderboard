@@ -19,5 +19,5 @@ kafka:
 
 http:
   client:
-    username:
-    password:
+    username: ???
+    password: ???
