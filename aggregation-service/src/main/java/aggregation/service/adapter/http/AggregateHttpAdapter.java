@@ -1,6 +1,8 @@
 package aggregation.service.adapter.http;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import aggregation.service.domain.repository.AggregateRepository;
 
 @RestController
 @RequestMapping(path = "/api/aggregate")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AggregateHttpAdapter {
 
     private final AggregateRepository aggregateRepository;
@@ -21,7 +24,7 @@ public class AggregateHttpAdapter {
 
     @GetMapping
     public List<Aggregate> findAll() {
-        return aggregateRepository.findAll();
+        return aggregateRepository.findAll().stream().limit(100L).collect(Collectors.toList());
     }
 
     @GetMapping("/{username}")
@@ -30,3 +33,4 @@ public class AggregateHttpAdapter {
             .getOrElseThrow(() -> new UserNotFoundException(String.format("Contributor with username: %s not found", username)));
     }
 }
+

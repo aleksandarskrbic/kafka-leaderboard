@@ -1,0 +1,14 @@
+.colorBlack {
+    color: black
+  }
+  
+  .imgHeight {
+    height: 45px;
+    float: left;
+    border: 1px solid black;
+  }
+
+  .nameCenter {
+    text-align: justify;
+    float: left;
+  }

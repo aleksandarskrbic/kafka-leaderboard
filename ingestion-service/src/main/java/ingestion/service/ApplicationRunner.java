@@ -58,7 +58,7 @@ public class ApplicationRunner {
             pullRequestPublisher,
             reviewPublisher
         );
-        
+
         final CommentIngestion commentIngestion = new CommentIngestion(1, parser, httpClient, commentPublisher);
 
         executorService.submit(() -> {
