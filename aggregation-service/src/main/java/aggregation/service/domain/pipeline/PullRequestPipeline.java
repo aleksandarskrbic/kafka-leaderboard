@@ -21,7 +21,7 @@ public class PullRequestPipeline implements Processor<PullRequestCreated> {
 
     @Override
     public void process() {
-        source.emit().map(PullRequestCreated::getUser).forEach(user ->
+        source.emit().filter(PullRequestCreated::getMerged).map(PullRequestCreated::getUser).forEach(user ->
             aggregateRepository.findByUsername(user.getUsername())
                 .map(aggregate -> {
                     final Aggregate newAggregate = new Aggregate(
